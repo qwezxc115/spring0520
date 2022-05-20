@@ -1,6 +1,5 @@
 package com.choong.spr.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +19,8 @@ public class BoardService {
 	@Autowired
 	private ReplyMapper replyMapper;
 	
-	public List<BoardDto> listBoard() {
-		// TODO Auto-generated method stub
-		return mapper.selectBoardAll();
+	public List<BoardDto> listBoard(String type, String keyword ) {
+		return mapper.selectBoardAll(type, "%" + keyword + "%");
 	}
 
 	public boolean insertBoard(BoardDto board) {
@@ -31,12 +29,10 @@ public class BoardService {
 	}
 
 	public BoardDto getBoardById(int id) {
-		// TODO Auto-generated method stub
 		return mapper.selectBoardById(id);
 	}
 
 	public boolean updateBoard(BoardDto dto) {
-		// TODO Auto-generated method stub
 		return mapper.updateBoard(dto) == 1;
 	}
 
@@ -47,7 +43,6 @@ public class BoardService {
 		
 		return mapper.deleteBoard(id) == 1;
 	}
-
 }
 
 
