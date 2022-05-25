@@ -4,6 +4,7 @@
 
 <c:url value="/board/list" var="listUrl"></c:url>
 <c:url value="/board/insert" var="insertUrl"></c:url>
+<c:url value="/member/signup" var="signupUrl" ></c:url>
 
 <nav class="navbar navbar-expand-md navbar-light bg-light mb-3">
   <div class="container">
@@ -11,8 +12,8 @@
     
     <!-- button.navbar-toggler>span.navbar-toggler-icon -->
     <button class="navbar-toggler" 
-    		data-bs-toggle="collapse"
-    		data-bs-target="#navbarSupportedContent"">
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent">
     	<span class="navbar-toggler-icon"></span>
     </button>
     
@@ -24,23 +25,38 @@
         <li class="nav-item">
           <a class="nav-link ${current == 'insert' ? 'active' : '' }" href="${insertUrl }">글쓰기</a>
         </li>
+        <!-- li.nav-item>a.nav-link{회원가입} -->
+        <li class="nav-item">
+        	<a href="${signupUrl }" class="nav-link ${current == 'signup' ? 'active' : '' }">회원가입</a>
+        </li>
       </ul>
       
-      <!-- search var  -->
-       <form action="${listUrl }" class="d-flex">
-       
-       <!-- search option -->
-       	<!-- select.form-select>option*3 -->
-       	<select name="type" id="" class="form-select">
-       		<option value="all" ${param.type != 'title' && param.type != 'body' ? selected : '' }>전체</option>
-       		<option value="title" ${param.type == 'title' ? selected : '' }>제목</option>
-       		<option value="body" ${param.body == 'body' ? selected : '' }>본문</option>
-       	</select>
-       
-        <input type="search" class="form-control me-2" placeholder="Search" aria-label="Search" name="keyword">
-        <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-      </form>
+      <!-- form.d-flex>input.form-control.me-2[type=search]+button.btn.btn-outline-success -->
       
+      <form action="${listUrl }" class="d-flex">
+      	<div class="input-group">
+	      	<!-- select.form-select>option*3 -->
+	      	<select name="type" id="" class="form-select" style="flex:0 0 100px;">
+	      		<option value="all" ${param.type != 'title' && param.type != 'body' ? 'selected' : '' }>전체</option>
+	      		<option value="title" ${param.type == 'title' ? 'selected' : '' }>제목</option>
+	      		<option value="body" ${param.type == 'body' ? 'selected' : ''}>본문</option>
+	      	</select>
+	      
+	      	<input type="search" class="form-control" name="keyword"/>
+	      	<button class="btn btn-outline-success"><i class="fa-solid fa-magnifying-glass"></i></button>
+      	</div>
+      </form>
     </div>
   </div>
 </nav>
+
+
+
+
+
+
+
+
+
+
+
