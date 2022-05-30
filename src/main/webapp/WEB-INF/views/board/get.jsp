@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,10 +49,6 @@
 		});
 
 
-		
-		
-		
-		
 		// 페이지 로딩 후 reply list 가져오는 ajax 요청
 		const listReply = function() {
 			
@@ -77,19 +75,19 @@
 									<div class="fw-bold">
 										<i class="fa-solid fa-comment"></i>
 										\${list[i].prettyInserted}
-										<span class="reply-edit-toggle-button badge bg-info text-dark"
-											id="replyEditToggleButton\${list[i].id }"
-											data-reply-id="\${list[i].id }">
-											<i class="fa-solid fa-pen-to-square"></i>
+										
+										<span id="modifyButtonWrapper\${list[i].id }">
 										</span>
-										<span class="reply-delete-button badge bg-danger"
-											data-reply-id="\${list[i].id }">
-											<i class="fa-solid fa-trash-can"></i>
-										</span>
+										
 									</div>
+									<span class="badge bg-light text-dark">
+										<i class="fa-solid fa-user"></i>
+										\${list[i].writerNickName}
+									</span>
+									<span id="replyContent\${list[i].id }">
 									\${list[i].content }
-	
-	
+									<span>
+
 								</div>
 	
 								<div id="replyEditFormContainer\${list[i].id }"
@@ -110,6 +108,22 @@
 								
 								`);
 						replyListElement.append(replyElement);
+						$("#replyContent" + list[i].id).text(list[i].content);
+						
+						// own이 true 일 때만 수정, 삭제 버튼 보이기
+						if (list[i].own) {
+							$("#modifyButtonWrapper" + list[i].id).html(`
+									<span class="reply-edit-toggle-button badge bg-info text-dark"
+									id="replyEditToggleButton\${list[i].id }"
+									data-reply-id="\${list[i].id }">
+									<i class="fa-solid fa-pen-to-square"></i>
+								</span>
+								<span class="reply-delete-button badge bg-danger"
+									data-reply-id="\${list[i].id }">
+									<i class="fa-solid fa-trash-can"></i>
+								</span>
+							`);
+						}
 						
 					} // end of for
 					
@@ -140,6 +154,7 @@
 								listReply();
 							},
 							error : function() {
+								$("#replyMessage1").show().text("댓글을 수정할 수 없습니다.").fadeOut(3000);
 								console.log("수정 실패");
 							},
 							complete : function() {
@@ -186,6 +201,7 @@
 									$("#replyMessage1").show().text(data).fadeOut(3000);
 								},
 								error : function() {
+									$("#replyMessage1").show().text("댓글을 삭제할 수 없습니다.").fadeOut(3000);
 									console.log(replyId + "댓글 삭제 중 문제 발생됨");
 								},
 								complete : function() {
@@ -228,6 +244,7 @@
 					// console.log(data);
 				},
 				error : function() {
+					$("#replyMessage1").show().text("댓글을 작성할 수 없습니다.").fadeOut(3000);
 					console.log("문제 발생");
 				},
 				complete : function() {
@@ -248,15 +265,15 @@
 			<div class="col">
 				<h1>
 					글 본문
-					
+
 					<sec:authorize access="isAuthenticated()">
-						<sec:authentication property="principal" var="principal"/>
-						
-						 <c:if test="${principal.username == board.memberId }">
-							 <button id="edit-button1" class="btn btn-secondary">
+						<sec:authentication property="principal" var="principal" />
+
+						<c:if test="${principal.username == board.memberId }">
+							<button id="edit-button1" class="btn btn-secondary">
 								<i class="fa-solid fa-pen-to-square"></i>
-						</button>
-						 </c:if>
+							</button>
+						</c:if>
 					</sec:authorize>
 				</h1>
 

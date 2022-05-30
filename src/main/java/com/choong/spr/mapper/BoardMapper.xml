@@ -4,59 +4,84 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.choong.spr.mapper.BoardMapper">
 
-	<select id="selectBoardAll"
-		resultType="com.choong.spr.domain.BoardDto">
-		SELECT b.id, b.title, b.inserted, COUNT(r.id) numOfReply
-		FROM Board b
-		LEFT JOIN Reply r ON b.id = r.board_id
-
-		<!-- search -->
+	<select id="selectBoardAll" resultType="com.choong.spr.domain.BoardDto">
+		SELECT b.id, 
+		       b.title, 
+		       b.inserted, 
+		       COUNT(r.id) numOfReply,
+		       m.nickName writerNickName
+		FROM Board b LEFT JOIN Reply r ON b.id = r.board_id
+		                  JOIN Member m ON b.memberId = m.id
+		
 		<if test="keyword != '%%'">
 			<choose>
 				<when test="type == 'all'">
 					WHERE b.title LIKE #{keyword } OR
-					b.body LIKE #{keyword}
+					      b.body LIKE #{keyword }
 				</when>
-
 				<when test="type == 'title'">
 					WHERE b.title LIKE #{keyword }
 				</when>
-
 				<when test="type == 'body'">
-					WHERE b.body LIKE #{keyword}
+					WHERE  b.body LIKE #{keyword }
 				</when>
 			</choose>
 		</if>
-
+		
 		GROUP BY b.id
 		ORDER BY b.id DESC
 	</select>
-
-	<insert id="insertBoard" useGeneratedKeys="true" keyColumn="id"
-		keyProperty="id">
+	
+	<insert id="insertBoard" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
 		INSERT INTO Board (title, body, memberId)
 		VALUES (#{title}, #{body}, #{memberId})
 	</insert>
-
-	<select id="selectBoardById"
-		resultType="com.choong.spr.domain.BoardDto">
-		SELECT b.id, b.title, b.body, b.inserted, COUNT(r.id)
-		numOfReply
+	
+	<select id="selectBoardById" resultType="com.choong.spr.domain.BoardDto">
+		SELECT b.id, 
+		       b.title, 
+		       b.body, 
+		       b.inserted, 
+		       COUNT(r.id) numOfReply, 
+		       m.id memberId,
+		       m.nickName writerNickName
 		FROM Board b LEFT JOIN Reply r ON b.id = r.board_id
-		WHERE
-		b.id = #{id}
+		                  JOIN Member m ON b.memberId = m.id
+		WHERE b.id = #{id}
 	</select>
-
+	
 	<update id="updateBoard">
 		UPDATE Board
 		SET title = #{title},
-		body = #{body}
-		WHERE
-		id = #{id}
+			body = #{body}
+		WHERE 
+		    id = #{id}
 	</update>
-
+	
 	<delete id="deleteBoard">
 		DELETE FROM Board
 		WHERE id = #{id }
 	</delete>
+	
+	<select id="listByMemberId" resultType="com.choong.spr.domain.BoardDto">
+	SELECT id
+	FROM Board
+	WHERE memberId = #{memberId}
+	</select>
+	
+	<delete id="deleteByMemberId">
+	DELETE FROM Board
+	WHERE memberId = #{memberId}
+	
+	</delete>
+	
 </mapper>
+
+
+
+
+
+
+
+
+

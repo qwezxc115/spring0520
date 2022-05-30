@@ -8,8 +8,7 @@ import com.choong.spr.domain.BoardDto;
 
 public interface BoardMapper {
 
-	List<BoardDto> selectBoardAll(@Param("type") String type, 
-			@Param("keyword") String keyword);
+	List<BoardDto> selectBoardAll(@Param("type") String type, @Param("keyword") String keyword);
 
 	int insertBoard(BoardDto board);
 
@@ -19,5 +18,8 @@ public interface BoardMapper {
 
 	int deleteBoard(int id);
 
+	List<BoardDto> listByMemberId(String memberId);
+
+	void deleteByMemberId(String memberId);
 
 }
