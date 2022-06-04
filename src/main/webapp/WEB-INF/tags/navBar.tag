@@ -9,6 +9,15 @@
 <c:url value="/member/list" var="memberListUrl"></c:url>
 <c:url value="/member/login" var="loginUrl"></c:url>
 <c:url value="/logout" var="logoutUrl"></c:url>
+<c:url value="/member/initpw" var="initPasswordUrl"></c:url>
+
+<%-- 회원정보 링크 --%>
+<sec:authorize access ="isAuthenticated()">
+	<sec:authentication property="principal" var="principal"/>
+	<c:url value="/member/get" var="memberInforUrl">
+		<c:param name="id" value="${principal.username }"/>
+	</c:url>
+</sec:authorize>
 
 <nav class="navbar navbar-expand-md navbar-light bg-light mb-3">
   <div class="container">
@@ -39,6 +48,17 @@
         <li class="nav-item">
         	<a href="${signupUrl }" class="nav-link ${current == 'signup' ? 'active' : '' }">회원가입</a>
         </li>
+        
+        <!-- 회원정보 -->
+        <sec:authorize access="isAuthenticated()">
+        	<li class="nav-item">
+        		<a href="${memberInforUrl }" class="nav-link ${current == 'memberInfo' ? 'active' : '' }">회원정보</a>
+        	</li>
+        	<!-- 암호 초기화 -->
+        	<div class="nav-item">
+        		<a href="${initPasswordUrl }" class="nav-link">암호초기화</a>
+        	</div>
+        </sec:authorize>
         
         <!-- admin 권한을 가진 사람만 회원목록 보기 가능 -->
         <sec:authorize access="hasRole('ADMIN')">

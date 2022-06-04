@@ -3,16 +3,16 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.choong.spr.mapper.MemberMapper">
-	
+
 	<insert id="insertMember">
 		INSERT INTO Member (id, password, email, nickName)
 		VALUES (#{id}, #{password}, #{email}, #{nickName})
-		
+	
 	</insert>
 	
 	<select id="countMemberId" resultType="int">
-		SELECT COUNT(id)
-		FROM Member
+		SELECT COUNT(id) 
+		FROM Member 
 		WHERE id = #{id}
 	</select>
 	
@@ -25,7 +25,7 @@
 	<select id="countMemberNickName" resultType="int">
 		SELECT COUNT(nickName)
 		FROM Member
-		WHERE nickName = #{nickName}
+		WHERE nickName = #{nickName}	
 	</select>
 	
 	<select id="selectAllMember" resultType="com.choong.spr.domain.MemberDto">
@@ -56,10 +56,10 @@
 	<update id="updateMember">
 		UPDATE Member
 		SET password = #{password},
-			email = #{email}, 
-			nickName = ${nickName}
+		    email = #{email},
+		    nickName = #{nickName}
 		WHERE
-			id = ${id}
+		    id = #{id}
 	</update>
 	
 	<!-- 권한 추가 -->
@@ -72,7 +72,17 @@
 		DELETE FROM Auth
 		WHERE memberId = #{id}
 	</delete>
+	
+	<update id="updatePasswordById">
+		UPDATE Member
+		SET password = #{pw}
+		WHERE id = #{id}
+	</update>
 </mapper>
+
+
+
+
 
 
 
