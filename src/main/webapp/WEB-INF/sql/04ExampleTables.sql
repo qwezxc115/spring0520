@@ -44,5 +44,55 @@ MODIFY COLUMN memberId VARCHAR(20) NOT NULL;
 SELECT * FROM Board ORDER BY 1 DESC;
 
 
+-- Reply에 memberId 컬럼 추가(Member 테이블 id 컬럼 참조키 제약사항, not null 제약사항 추가)
+ALTER TABLE Reply
+ADD COLUMN memberId VARCHAR(20) NOT NULL DEFAULT 'user' REFERENCES Member(id);
+
+
+DESC Reply;
+
+ALTER TABLE Reply
+MODIFY COLUMN memberId VARCHAR(20) NOT NULL AFTER content;
+
+SELECT * FROM Reply ORDER BY 1 DESC;
+
+
+	SELECT r.id, 
+	       r.board_id boardId,
+	       r.content,
+	       m.nickName writerNickName,
+	       r.inserted,
+		   IF (m.id = 'user3', 'true', 'false') own
+	FROM Reply r JOIN Member m ON r.memberId = m.id
+	WHERE r.board_id = 15
+	ORDER BY r.id
+;
+-- Board에 fileName 컬럼 추가????? 그러지 말고 파일 테이블을 만들자
+DESC Board;
+
+CREATE TABLE File (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	boardId INT NOT NULL REFERENCES Board(id),
+    fileName VARCHAR(255) NOT NULL
+);
+
+DESC File;
+
+SELECT * FROM File;
+SELECT * FROM Board ORDER BY 1 DESC;
+
+SELECT * FROM File WHERE boardId = 49;
+
+
+
+
+
+
+
+
+
+
+
+
 
 
