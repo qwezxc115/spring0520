@@ -262,17 +262,10 @@
 </script>
 
 <style>
-<<<<<<< HEAD
-.delete-checkbox:checked {
-	background-color: #dc3545;
-	border-color: #dc3545;
-}
-=======
 	.delete-checkbox:checked {
 		background-color: #dc3545;
 		border-color: #dc3545;
 	}
->>>>>>> a7f0a806868aa07332e78efac599d01f8f7f2903
 </style>
 
 <title>Insert title here</title>
@@ -301,12 +294,7 @@
 					<div class="alert alert-primary">${message }</div>
 				</c:if>
 
-<<<<<<< HEAD
-				<form id="form1" action="${appRoot }/board/modify" method="post"
-					enctype="multipart/form-data">
-=======
 				<form id="form1" action="${appRoot }/board/modify" method="post" enctype="multipart/form-data">
->>>>>>> a7f0a806868aa07332e78efac599d01f8f7f2903
 					<input type="hidden" name="id" value="${board.id }" />
 
 					<div>
@@ -320,17 +308,10 @@
 						<textarea class="form-control mb-3" name="body" id="textarea1"
 							cols="30" rows="10" readonly>${board.body }</textarea>
 					</div>
-<<<<<<< HEAD
-
-					<c:forEach items="${board.fileName }" var="file">
-						<%
-							String file = (String) pageContext.getAttribute("file");
-=======
 					
 					<c:forEach items="${board.fileName }" var="file">
 						<%
 						String file = (String) pageContext.getAttribute("file");
->>>>>>> a7f0a806868aa07332e78efac599d01f8f7f2903
 						String encodedFileName = java.net.URLEncoder.encode(file, "utf-8");
 						pageContext.setAttribute("encodedFileName", encodedFileName);
 						%>
@@ -338,44 +319,20 @@
 							<div class="col-lg-1 col-12 d-flex align-items-center">
 								<div class="d-none removeFileCheckbox">
 									<div class="form-check form-switch">
-<<<<<<< HEAD
-										<label class="form-check-label text-danger">
-											<input class="form-check-input delete-checkbox"
-												type="checkbox" name="removeFileList" value="${file }" />
-											<i class="fa-solid fa-trash-can"></i>
-										</label>
-=======
 											<label class="form-check-label text-danger">
 												<input class="form-check-input delete-checkbox" type="checkbox" name="removeFileList" value="${file }"/>
 												<i class="fa-solid fa-trash-can"></i>
 											</label>
->>>>>>> a7f0a806868aa07332e78efac599d01f8f7f2903
 									</div>
 								</div>
 							</div>
 							<div class="col-lg-11 col-12">
 								<div>
-<<<<<<< HEAD
-									<img class="img-fluid img-thumbnail"
-										src="${imageUrl }/board/${board.id }/${encodedFileName }"
-										alt="" />
-=======
 									<img class="img-fluid img-thumbnail" src="${imageUrl }/board/${board.id }/${encodedFileName }" alt="" />
->>>>>>> a7f0a806868aa07332e78efac599d01f8f7f2903
 								</div>
 							</div>
 						</div>
 					</c:forEach>
-<<<<<<< HEAD
-
-					<div id="addFileInputContainer1" class="my-3 d-none">
-						<label for="fileInput1" class="form-label"></label>
-						파일 추가
-						<input id="fileInput1" class="form-control mb-3" type="file"
-							accept="image/*" multiple="multiple" name="addFileList" />
-					</div>
-
-=======
 					
 					<div id="addFileInputContainer1" class="my-3 d-none">
 						<label for="fileInput1" class="form-label"></label>
@@ -383,7 +340,6 @@
 						<input id="fileInput1" class="form-control mb-3" type="file" accept="image/*" multiple="multiple" name="addFileList" />
 					</div>
 					
->>>>>>> a7f0a806868aa07332e78efac599d01f8f7f2903
 					<div>
 						<label for="input3" class="form-label">작성자</label>
 						<input id="input3" class="form-control mb-3" type="text"
