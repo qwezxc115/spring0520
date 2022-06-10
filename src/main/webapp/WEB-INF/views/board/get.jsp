@@ -33,6 +33,8 @@
 			$("#textarea1").removeAttr("readonly");
 			$("#modify-submit1").removeClass("d-none");
 			$("#delete-submit1").removeClass("d-none");
+			$("#addFileInputContainer1").removeClass("d-none");
+			$(".removeFileCheckbox").removeClass("d-none");
 		});
 
 		$("#delete-submit1").click(function(e) {
@@ -49,6 +51,10 @@
 		});
 
 
+		
+		
+		
+		
 		// 페이지 로딩 후 reply list 가져오는 ajax 요청
 		const listReply = function() {
 			
@@ -79,15 +85,16 @@
 										<span id="modifyButtonWrapper\${list[i].id }">
 										</span>
 										
+
+										
 									</div>
 									<span class="badge bg-light text-dark">
 										<i class="fa-solid fa-user"></i>
 										\${list[i].writerNickName}
 									</span>
-									<span id="replyContent\${list[i].id }">
-									\${list[i].content }
-									<span>
-
+									<span id="replyContent\${list[i].id }"><span>
+	
+	
 								</div>
 	
 								<div id="replyEditFormContainer\${list[i].id }"
@@ -110,10 +117,10 @@
 						replyListElement.append(replyElement);
 						$("#replyContent" + list[i].id).text(list[i].content);
 						
-						// own이 true 일 때만 수정, 삭제 버튼 보이기
+						// own이 true일 때만 수정,삭제 버튼 보이기
 						if (list[i].own) {
 							$("#modifyButtonWrapper" + list[i].id).html(`
-									<span class="reply-edit-toggle-button badge bg-info text-dark"
+								<span class="reply-edit-toggle-button badge bg-info text-dark"
 									id="replyEditToggleButton\${list[i].id }"
 									data-reply-id="\${list[i].id }">
 									<i class="fa-solid fa-pen-to-square"></i>
@@ -255,6 +262,13 @@
 	});
 </script>
 
+<style>
+.delete-checkbox:checked {
+	background-color: #dc3545;
+	border-color: #dc3545;
+}
+</style>
+
 <title>Insert title here</title>
 </head>
 <body>
@@ -281,30 +295,66 @@
 					<div class="alert alert-primary">${message }</div>
 				</c:if>
 
-				<form id="form1" action="${appRoot }/board/modify" method="post">
+				<form id="form1" action="${appRoot }/board/modify" method="post"
+					enctype="multipart/form-data">
 					<input type="hidden" name="id" value="${board.id }" />
 
 					<div>
 						<label class="form-label" for="input1">제목</label>
-						<input class="form-control" type="text" name="title" required
+						<input class="form-control mb-3" type="text" name="title" required
 							id="input1" value="${board.title }" readonly />
 					</div>
 
 					<div>
 						<label class="form-label" for="textarea1">본문</label>
-						<textarea class="form-control" name="body" id="textarea1"
+						<textarea class="form-control mb-3" name="body" id="textarea1"
 							cols="30" rows="10" readonly>${board.body }</textarea>
+					</div>
+
+					<c:forEach items="${board.fileName }" var="file">
+						<%
+							String file = (String) pageContext.getAttribute("file");
+						String encodedFileName = java.net.URLEncoder.encode(file, "utf-8");
+						pageContext.setAttribute("encodedFileName", encodedFileName);
+						%>
+						<div class="row">
+							<div class="col-lg-1 col-12 d-flex align-items-center">
+								<div class="d-none removeFileCheckbox">
+									<div class="form-check form-switch">
+										<label class="form-check-label text-danger">
+											<input class="form-check-input delete-checkbox"
+												type="checkbox" name="removeFileList" value="${file }" />
+											<i class="fa-solid fa-trash-can"></i>
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-11 col-12">
+								<div>
+									<img class="img-fluid img-thumbnail"
+										src="${imageUrl }/board/${board.id }/${encodedFileName }"
+										alt="" />
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+
+					<div id="addFileInputContainer1" class="my-3 d-none">
+						<label for="fileInput1" class="form-label"></label>
+						파일 추가
+						<input id="fileInput1" class="form-control mb-3" type="file"
+							accept="image/*" multiple="multiple" name="addFileList" />
 					</div>
 
 					<div>
 						<label for="input3" class="form-label">작성자</label>
-						<input id="input3" class="form-control" type="text"
+						<input id="input3" class="form-control mb-3" type="text"
 							value="${board.writerNickName }" readonly />
 					</div>
 
 					<div>
 						<label for="input2" class="form-label">작성일시</label>
-						<input class="form-control" type="datetime-local"
+						<input class="form-control mb-3" type="datetime-local"
 							value="${board.inserted }" readonly />
 					</div>
 
