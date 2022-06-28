@@ -169,6 +169,7 @@
 </script>
 </head>
 <body>
+
 	<my:navBar current="memberInfo"></my:navBar>
 	
 	<div class="container">
@@ -225,16 +226,6 @@
 					<input class="form-control" type="datetime-local" value="${member.inserted }" readonly />
 				</div>
 				
-				<%-- 요구사항
-				1. 이메일 input에 변경 발생시 '이메일중복확인버튼 활성화'
-				   ->버튼클릭시 ajax로 요청/응답, 적절한 메시지 출력
-				2. 닉네임 input에 변경 발생시 '닉네임중복확인버튼 활성화'
-				   ->버튼클릭시 ajax로 요청/응답, 적절한 메시지 출력
-				
-				3. 암호/암호확인일치, 이메일 중복확인 완료 ,닉네임 중복확인 완료 시에만
-				   수정버튼 활성화
-				
-				 --%>
 				
 				<div class="mt-3">
 					<button class="btn btn-secondary" id="modifySubmitButton1" data-bs-toggle="modal" data-bs-target="#modal2" disabled>수정</button>
