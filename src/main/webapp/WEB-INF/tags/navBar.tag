@@ -31,86 +31,79 @@
 	</c:url>
 </sec:authorize>
 
-<nav class="navbar navbar-expand-sm navbar-light">
-	<div class="col-md-3 text-left p-0">
-		<a class="navbar-brand" href="${appRoot}/main/home">
+
+<nav class="grid navbar navbar-light">
+	<div class="navbar-brand">
+		<a href="${appRoot}/main/home">
 			<img alt="triple-logo" width="150"
 				src="${appRoot }/resources/img/triple-logo.png">
 		</a>
 	</div>
-	<div class="d-flex justify-content-end">
-		<div class="container-fluid">
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarNav"
-				aria-controls="navbarNav" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav">
 
-					<sec:authorize access="not isAuthenticated()">
-						<li class="nav-item">
-							<a href="${signupUrl }"
-								class="nav-link ${current == 'signup' ? 'active' : '' }">회원가입</a>
-						</li>
-					</sec:authorize>
+	<!-- 게시판 메뉴 -->
+	<div class="g-col-3">
+		<ul class="nav justify-content-center">
+			<li class="nav-item">
+				<a class="nav-link ${current == 'list' ? 'active' : '' }"
+					href="${listUrl }">자유게시판</a>
+			</li>
 
-					<sec:authorize access="not isAuthenticated()">
-						<li class="nav-item">
-							<a class="nav-link" href="${loginUrl }">로그인</a>
-						</li>
-					</sec:authorize>
+			<sec:authorize access="isAuthenticated()">
+				<li class="nav-item">
+					<a class="nav-link ${current == 'insert' ? 'active' : '' }"
+						href="${insertUrl }">글쓰기</a>
+				</li>
+			</sec:authorize>
+		</ul>
+	</div>
 
+	<div class="g-col-2">
+		<ul class="nav justify-content-center">
+			<sec:authorize access="not isAuthenticated()">
+				<li class="nav-item">
+					<a href="${signupUrl }"
+						class="nav-link ${current == 'signup' ? 'active' : '' }">회원가입</a>
+				</li>
+			</sec:authorize>
 
-					<li class="nav-item">
-						<a class="nav-link ${current == 'list' ? 'active' : '' }"
-							href="${listUrl }">목록보기</a>
-					</li>
+			<sec:authorize access="not isAuthenticated()">
+				<li class="nav-item">
+					<a class="nav-link" href="${loginUrl }">로그인</a>
+				</li>
+			</sec:authorize>
 
-					<sec:authorize access="isAuthenticated()">
-						<li class="nav-item">
-							<a class="nav-link ${current == 'insert' ? 'active' : '' }"
-								href="${insertUrl }">글쓰기</a>
-						</li>
-					</sec:authorize>
+			<!-- 로그아웃, 마이페이지  -->
+			<sec:authorize access="isAuthenticated()">
+				<li class="nav-item p-2">
+					<sec:authentication property="principal.username" />
+					<span style="color: #6d0d27;">님 반갑습니다!</span>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" herf="#" id="logoutlink1">로그아웃</a>
+				</li>
+			</sec:authorize>
 
-
-
-					<!-- 로그아웃, 마이페이지  -->
-					<sec:authorize access="isAuthenticated()">
-						<li>
-							<sec:authentication property="principal.username" />
-							<span style="color: #6d0d27;">님 반갑습니다!</span>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" herf="#" id="logoutlink1">로그아웃</a>
-						</li>
-					</sec:authorize>
-
-					<sec:authorize access="isAuthenticated()">
-						<li class="nav-item">
-							<a href="${memberInfoUrl }"
-								class="nav-link ${current == 'memberInfo' ? 'active' : '' }">회원정보</a>
-						</li>
-					</sec:authorize>
+			<sec:authorize access="isAuthenticated()">
+				<li class="nav-item">
+					<a href="${memberInfoUrl }"
+						class="nav-link ${current == 'memberInfo' ? 'active' : '' }">마이페이지</a>
+				</li>
+			</sec:authorize>
 
 
-					<sec:authorize access="hasRole('ADMIN')">
-						<li class="nav-item">
-							<a href="${memberListUrl }"
-								class="nav-link ${current == 'memberList' ? 'active' : '' }">회원목록</a>
-						</li>
-						<div class="nav-item">
-							<a href="${initPasswordUrl }" class="nav-link">암호초기화</a>
-						</div>
-					</sec:authorize>
-
-				</ul>
-			</div>
-		</div>
+			<sec:authorize access="hasRole('ADMIN')">
+				<li class="nav-item">
+					<a href="${memberListUrl }"
+						class="nav-link ${current == 'memberList' ? 'active' : '' }">회원목록</a>
+				</li>
+				<div class="nav-item">
+					<a href="${initPasswordUrl }" class="nav-link">암호초기화</a>
+				</div>
+			</sec:authorize>
+		</ul>
+	</div>
 </nav>
-</div>
+
 <!-- 로그아웃 -->
 <form action="${logoutUrl }" id="logoutForm1" method="post"></form>
 
@@ -119,8 +112,10 @@
 	<div class="form-group col-md-6 text-center m-1">
 		<form action="${listUrl }" class="d-flex">
 			<div class="input-group">
-				<select name="type" id="" class="form-select" style="flex: 0 0 100px;">
-					<option value="all" ${param.type != 'title' && param.type != 'body' ? 'selected' : '' }>전체</option>
+				<select name="type" id="" class="form-select"
+					style="flex: 0 0 100px;">
+					<option value="all"
+						${param.type != 'title' && param.type != 'body' ? 'selected' : '' }>전체</option>
 					<option value="title" ${param.type == 'title' ? 'selected' : '' }>제목</option>
 					<option value="body" ${param.type == 'body' ? 'selected' : ''}>본문</option>
 				</select>
