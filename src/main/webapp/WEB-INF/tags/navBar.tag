@@ -4,6 +4,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ attribute name="current"%>
 
+
 <script>
 	$(document).ready(function() {
 		//로그아웃 동작 

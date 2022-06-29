@@ -26,7 +26,6 @@
 					</div>
 				</c:if>
 				
-				<!-- table.table>thead>tr>th*3^^tbody -->
 				<table class="table">
 					<thead>
 						<tr>
