@@ -48,13 +48,6 @@ public class BoardController {
 			Principal principal,
 			RedirectAttributes rttr) {
 		
-//		System.out.println(file);
-//		System.out.println(file.getOriginalFilename());
-//		System.out.println(file.getSize());
-		
-//		if (file.getSize() > 0) {
-//			board.setFileName(file.getOriginalFilename());
-//		}
 		
 		if (file != null) {
 			List<String> fileList = new ArrayList<String>();
@@ -81,9 +74,6 @@ public class BoardController {
 		BoardDto dto = service.getBoardById(id);
 		List<ReplyDto> replyList = replyService.getReplyByBoardId(id);
 		model.addAttribute("board", dto);
-		
-		/* ajax로 처리하기 위해 삭제 */
-		// model.addAttribute("replyList", replyList);
 		
 	}
 	

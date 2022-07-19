@@ -22,6 +22,8 @@
 	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 	crossorigin="anonymous"></script>
 
+<%@ include file="/WEB-INF/subModules/font.jsp"%>
+
 <title>Insert title here</title>
 
 <style>
@@ -33,6 +35,10 @@
 
 .bkbtn {
 	background-color: #daccc6;
+}
+
+.form-control {
+	font-size: 1.5rem;
 }
 </style>
 

@@ -104,6 +104,19 @@
 	WHERE boardId = #{boardId}
 	  AND fileName = #{fileName}
 	</delete>
+	
+	<select id="getMainList" resultType="com.choong.spr.domain.BoardDto">
+		SELECT b.id, 
+		       b.title, 
+		       b.body, 
+		       b.inserted, 
+		       m.nickName writerNickName
+		FROM Board b LEFT JOIN Reply r ON b.id = r.board_id
+		                  JOIN Member m ON b.memberId = m.id
+		ORDER BY b.inserted DESC
+		LIMIT 5		                  
+	</select>
+	
 </mapper>
 
 

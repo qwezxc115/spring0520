@@ -2,7 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+
+<%@ include file="/WEB-INF/subModules/font.jsp"%>
 
 <!DOCTYPE html>
 <html>
@@ -24,6 +27,7 @@
 	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 	crossorigin="anonymous"></script>
 
+<%@ include file="/WEB-INF/subModules/font.jsp"%>
 
 <script>
 	$(document).ready(function() {
@@ -262,10 +266,18 @@
 </script>
 
 <style>
-	.delete-checkbox:checked {
-		background-color: #dc3545;
-		border-color: #dc3545;
-	}
+.delete-checkbox:checked {
+	background-color: #dc3545;
+	border-color: #dc3545;
+}
+
+.form-label {
+	font-size: 2.0rem;
+}
+
+.form-control {
+	font-size: 1.5rem;
+}
 </style>
 
 <title>Insert title here</title>
@@ -278,9 +290,9 @@
 			<div class="col">
 				<h1>
 					글 본문
-					
+
 					<sec:authorize access="isAuthenticated()">
-						<sec:authentication property="principal" var="principal"/>
+						<sec:authentication property="principal" var="principal" />
 
 						<c:if test="${principal.username == board.memberId }">
 							<button id="edit-button1" class="btn btn-secondary">
@@ -294,7 +306,8 @@
 					<div class="alert alert-primary">${message }</div>
 				</c:if>
 
-				<form id="form1" action="${appRoot }/board/modify" method="post" enctype="multipart/form-data">
+				<form id="form1" action="${appRoot }/board/modify" method="post"
+					enctype="multipart/form-data">
 					<input type="hidden" name="id" value="${board.id }" />
 
 					<div>
@@ -308,10 +321,10 @@
 						<textarea class="form-control mb-3" name="body" id="textarea1"
 							cols="30" rows="10" readonly>${board.body }</textarea>
 					</div>
-					
+
 					<c:forEach items="${board.fileName }" var="file">
 						<%
-						String file = (String) pageContext.getAttribute("file");
+							String file = (String) pageContext.getAttribute("file");
 						String encodedFileName = java.net.URLEncoder.encode(file, "utf-8");
 						pageContext.setAttribute("encodedFileName", encodedFileName);
 						%>
@@ -319,27 +332,31 @@
 							<div class="col-lg-1 col-12 d-flex align-items-center">
 								<div class="d-none removeFileCheckbox">
 									<div class="form-check form-switch">
-											<label class="form-check-label text-danger">
-												<input class="form-check-input delete-checkbox" type="checkbox" name="removeFileList" value="${file }"/>
-												<i class="fa-solid fa-trash-can"></i>
-											</label>
+										<label class="form-check-label text-danger">
+											<input class="form-check-input delete-checkbox"
+												type="checkbox" name="removeFileList" value="${file }" />
+											<i class="fa-solid fa-trash-can"></i>
+										</label>
 									</div>
 								</div>
 							</div>
 							<div class="col-lg-11 col-12">
 								<div>
-									<img class="img-fluid img-thumbnail" src="${imageUrl }/board/${board.id }/${encodedFileName }" alt="" />
+									<img class="img-fluid img-thumbnail"
+										src="${imageUrl }/board/${board.id }/${encodedFileName }"
+										alt="" />
 								</div>
 							</div>
 						</div>
 					</c:forEach>
-					
+
 					<div id="addFileInputContainer1" class="my-3 d-none">
 						<label for="fileInput1" class="form-label"></label>
 						파일 추가
-						<input id="fileInput1" class="form-control mb-3" type="file" accept="image/*" multiple="multiple" name="addFileList" />
+						<input id="fileInput1" class="form-control mb-3" type="file"
+							accept="image/*" multiple="multiple" name="addFileList" />
 					</div>
-					
+
 					<div>
 						<label for="input3" class="form-label">작성자</label>
 						<input id="input3" class="form-control mb-3" type="text"
@@ -369,8 +386,10 @@
 				<form id="insertReplyForm1">
 					<div class="input-group">
 						<input type="hidden" name="boardId" value="${board.id }" />
-						<input id="insertReplyContentInput1" class="form-control" type="text" name="content" required />
-						<button id="addReplySubmitButton1" class="btn btn-outline-secondary">
+						<input id="insertReplyContentInput1" class="form-control"
+							type="text" name="content" required />
+						<button id="addReplySubmitButton1"
+							class="btn btn-outline-secondary">
 							<i class="fa-solid fa-comment-dots"></i>
 						</button>
 					</div>
@@ -378,7 +397,8 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="alert alert-primary" style="display:none; " id="replyMessage1"></div>
+			<div class="alert alert-primary" style="display: none;"
+				id="replyMessage1"></div>
 		</div>
 	</div>
 
@@ -388,7 +408,11 @@
 	<div class="container mt-3">
 		<div class="row">
 			<div class="col">
-				<h3>댓글 <span id="numOfReply1"></span> 개</h3>
+				<h3>
+					댓글
+					<span id="numOfReply1"></span>
+					개
+				</h3>
 
 				<ul id="replyList1" class="list-group">
 					<%-- 

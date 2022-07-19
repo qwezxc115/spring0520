@@ -36,7 +36,7 @@ public class AppListener implements ServletContextListener {
          
          /* 복붙 주의, 경로 각자 다름 */
 
-         String imageUrl = "https://bucket0207-8747919474.s3.ap-northeast-2.amazonaws.com";
+         String imageUrl = "https://bucket0207-0308.s3.ap-northeast-2.amazonaws.com";
 
          application.setAttribute("imageUrl", imageUrl);
     }

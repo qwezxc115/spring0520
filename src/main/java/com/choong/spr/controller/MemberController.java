@@ -24,11 +24,6 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 	
-	// TODO : MemberService 작성
-	//                      addMember method 작성
-	//        MemberMapper.java, xml 작성
-	//                      insertMember method 작성
-	
 
 	@GetMapping("signup")
 	public void signupForm() {

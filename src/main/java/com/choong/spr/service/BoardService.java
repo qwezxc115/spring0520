@@ -183,6 +183,11 @@ public class BoardService {
 		s3.deleteObject(deleteObjectRequest);
 	}
 
+	public List<BoardDto> getMainList() {
+		
+		return mapper.getMainList();
+	}
+
 }
 
 
